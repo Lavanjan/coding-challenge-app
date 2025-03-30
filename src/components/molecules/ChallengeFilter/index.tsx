@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Select, Space } from "antd";
+import { Space } from "antd";
+import Select from "../../atoms/Select";
 
 const programmingLanguages = [
   { id: 101, name: "TYPESCRIPT" },

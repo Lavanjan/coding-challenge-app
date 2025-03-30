@@ -3,12 +3,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./slices/authSlice";
-import challengesReducer from "./slices/challengesSlice";
 import questionsReducer from "./slices/questionsSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  challenges: challengesReducer,
   questions: questionsReducer,
 });
 

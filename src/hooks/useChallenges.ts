@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import { fetchChallenges } from "../api/challengesApi";
 import { ChallengesResponse } from "../types";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useChallenges = (filters: {
   page?: number;
@@ -12,12 +11,7 @@ export const useChallenges = (filters: {
 }) => {
   return useQuery<ChallengesResponse, AxiosError>({
     queryKey: ["challenges", filters],
-    queryFn: async () => {
-      const response = await axios.get(`${API_BASE_URL}/dev/challenges`, {
-        params: filters,
-      });
-      return response.data;
-    },
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => fetchChallenges(filters),
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 };

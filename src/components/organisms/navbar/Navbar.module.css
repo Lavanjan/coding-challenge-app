@@ -1,0 +1,45 @@
+.navcontainer {
+  padding: 16px 24px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navTitle {
+  margin: 0;
+}
+
+.navButtons {
+  display: flex;
+  gap: 24px;
+}
+
+.completedButton {
+  cursor: pointer;
+}
+
+.completedListContainer {
+  width: 100%;
+}
+
+.completedHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.completedTitle {
+  margin: 0;
+}
+
+.completedTimeContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+}

@@ -2,8 +2,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useLogin } from "../../hooks/useLogin";
-import { Alert, Button, Form, Input, Card, Typography } from "antd";
-import { useState } from "react";
+import { Button, Form, Input, Card, Typography, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import styles from "./login.module.css";
@@ -11,9 +10,9 @@ import styles from "./login.module.css";
 const { Title, Text } = Typography;
 
 const LoginPage = () => {
-  const { mutate: login, isPending, error } = useLogin();
+  const { mutate: login, isPending } = useLogin();
   const navigate = useNavigate();
-  const [loginError, setLoginError]: any = useState(null);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const formik = useFormik({
     initialValues: {
@@ -27,13 +26,15 @@ const LoginPage = () => {
       password: Yup.string().required("Password is required"),
     }),
     onSubmit: (values) => {
-      setLoginError(null);
       login(values, {
         onSuccess: () => {
+          messageApi.success("Login successful!");
           navigate("/home");
         },
-        onError: (err) => {
-          setLoginError(err.message || "An error occurred. Please try again.");
+        onError: (err: any) => {
+          messageApi.error(
+            err.message || "An error occurred. Please try again."
+          );
         },
       });
     },
@@ -41,6 +42,7 @@ const LoginPage = () => {
 
   return (
     <div className={styles.container}>
+      {contextHolder}
       <Card className={styles.card} bordered={false}>
         <div className={styles.header}>
           <Title level={3}>Welcome Back</Title>
@@ -99,19 +101,6 @@ const LoginPage = () => {
               Sign In
             </Button>
           </Form.Item>
-
-          {(loginError || error) && (
-            <Alert
-              message={
-                loginError ||
-                (error && error.message) ||
-                "An unknown error occurred"
-              }
-              type="error"
-              showIcon
-              className={styles.errorAlert}
-            />
-          )}
         </Form>
       </Card>
     </div>

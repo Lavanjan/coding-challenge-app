@@ -1,13 +1,18 @@
-import { Badge, Button, Drawer, List, Tag } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Badge, Button, Drawer, List, Tag, Typography, Dropdown } from "antd";
+import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { useChallenges } from "../../../hooks/useChallenges";
+import { Link, useNavigate } from "react-router-dom";
+import styles from "./Navbar.module.css";
+
+const { Title, Text } = Typography;
 
 const Navbar = () => {
   const [showCompleted, setShowCompleted] = useState(false);
   const { completed, timeSpent } = useAppSelector((state) => state.questions);
   const { data: challenges } = useChallenges({});
+  const navigate = useNavigate();
 
   const completedChallenges =
     challenges?.data
@@ -23,32 +28,40 @@ const Navbar = () => {
       }))
       .sort((a, b) => b.totalTime - a.totalTime) || [];
 
-  return (
-    <nav
-      style={{
-        padding: "16px 24px",
-        background: "#fff",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-        Code Challenges
-      </div>
+  const handleLogout = () => {
+    navigate("/");
+  };
 
-      <div style={{ display: "flex", gap: "24px" }}>
+  const userMenuItems = [
+    {
+      key: "logout",
+      label: "Logout",
+      icon: <LogoutOutlined />,
+      onClick: handleLogout,
+    },
+  ];
+
+  return (
+    <nav className={styles.navcontainer}>
+      <Link className={styles.link} to="/home">
+        <Title level={3} className={styles.navTitle}>
+          Code Challenges
+        </Title>
+      </Link>
+
+      <div className={styles.navButtons}>
         <Badge
           count={completedChallenges.length}
           showZero
-          style={{ cursor: "pointer" }}
+          className={styles.completedButton}
           onClick={() => setShowCompleted(true)}
         >
           <Button type="text">Completed Challenges</Button>
         </Badge>
 
-        <Button type="text" icon={<UserOutlined />} />
+        <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+          <Button type="text" icon={<UserOutlined />} />
+        </Dropdown>
       </div>
 
       <Drawer
@@ -61,15 +74,11 @@ const Navbar = () => {
           dataSource={completedChallenges}
           renderItem={(challenge) => (
             <List.Item key={challenge.id}>
-              <div style={{ width: "100%" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginBottom: "8px",
-                  }}
-                >
-                  <h4>{challenge.challenge}</h4>
+              <div className={styles.completedListContainer}>
+                <div className={styles.completedHeader}>
+                  <Title level={5} className={styles.completedTitle}>
+                    {challenge.challenge}
+                  </Title>
                   <Tag
                     color={
                       challenge.level === "EASY"
@@ -82,14 +91,8 @@ const Navbar = () => {
                     {challenge.level}
                   </Tag>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <span>{challenge.language.name}</span>
+                <div className={styles.completedTimeContainer}>
+                  <Text>{challenge.language.name}</Text>
                   <Tag>Total Time: {challenge.totalTime}s</Tag>
                 </div>
               </div>

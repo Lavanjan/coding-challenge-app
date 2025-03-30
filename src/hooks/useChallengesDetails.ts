@@ -1,20 +1,12 @@
-import axios, { AxiosError } from "axios";
-import { Challenge } from "../types";
 import { useQuery } from "@tanstack/react-query";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { AxiosError } from "axios";
+import { Challenge } from "../types";
+import { fetchChallengeDetails } from "../api/challengesApi";
 
 export const useChallengeDetails = (id: string) => {
   return useQuery<Challenge, AxiosError>({
     queryKey: ["challenge", id],
-    queryFn: async () => {
-      const response = await axios.get(
-        `${API_BASE_URL}/dev/challenges?id=${id}`
-      );
-      console.log({ response });
-
-      return response.data.data[0];
-    },
+    queryFn: () => fetchChallengeDetails(id),
     enabled: !!id,
   });
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Col, Row, Pagination, Spin, Alert } from "antd";
-import ChallengeFilters from "../../components/molecules/challenge-filter";
-import ChallengeCard from "../../components/molecules/challenge-card";
+import ChallengeFilters from "../../components/molecules/ChallengeFilter";
+import ChallengeCard from "../../components/molecules/ChallengeCard";
 import { useChallenges } from "../../hooks/useChallenges";
 import { useAppSelector } from "../../hooks/useAppSelector";
 

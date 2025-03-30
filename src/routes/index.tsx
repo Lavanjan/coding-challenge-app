@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LoginPage from "../pages/login";
-import HomePage from "../pages/home";
-import ChallengePage from "../pages/challenges";
+import LoginPage from "../pages/LoginPage";
+import HomePage from "../pages/HomePage";
+import ChallengePage from "../pages/ChallengesPage";
 import { ReactNode } from "react";
-import Navbar from "../components/organisms/navbar";
+import Navbar from "../components/organisms/Navbar";
 
 interface LayoutProps {
   children: ReactNode;

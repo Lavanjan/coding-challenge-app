@@ -30,6 +30,7 @@ export interface ChallengesResponse {
 export interface ChallengeCardProps {
   id: number;
   title: string;
-  difficulty: "EASY" | "MEDIUM" | "HARD";
+  difficulty: string;
   language: string;
+  isCompleted: boolean;
 }

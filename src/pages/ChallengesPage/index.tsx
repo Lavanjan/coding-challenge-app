@@ -1,5 +1,5 @@
 import { Alert, Col, Progress, Row, Spin } from "antd";
-import QuestionItem from "../../components/molecules/question-item";
+import QuestionItem from "../../components/molecules/QuestionItem";
 import { useChallengeDetails } from "../../hooks/useChallengesDetails";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../hooks/useAppSelector";
